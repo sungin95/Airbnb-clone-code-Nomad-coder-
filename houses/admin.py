@@ -14,3 +14,4 @@ class HouseAdmin(admin.ModelAdmin):
     search_fields = ["address"]  # _startswith  텍스트로 시작하는 것만 검색
     # search_fields 는 반드시 리스트 혹은 튜플이어야 한다. string이면 안된다.
     list_display_links = ("name", "address")
+    list_editable = ("pets_allowed",)
