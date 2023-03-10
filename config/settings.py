@@ -39,7 +39,6 @@ SYSTEM_APPS = [
 ]
 
 CUSTOM_APPS = [
-    "houses.apps.HousesConfig",
     "users.apps.UsersConfig",
 ]
 
