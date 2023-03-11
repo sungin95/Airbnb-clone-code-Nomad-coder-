@@ -98,6 +98,16 @@ def total_amenities(self, room):
 
 
 
+## 7.4 Reverse Accessor 시작(set_)
+
+`Room.objects.filter(owner__username='dlrkehrud')`
+
+이런것도 되네ㄷㄷ
+
+`Room.objects.filter(owner__username__startswith='no')`
+
+ 이렇게도 되지만 user를 통해 room을 알고 싶을 수 있다. 
+
 
 
 
