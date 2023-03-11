@@ -72,7 +72,27 @@ QuerySet은 게으르다. 무슨 말이냐면 실제로 데이터를 가져오�
 
 
 
+## 7.3
 
+`__contains` 는 lookup이라고 불린다. 
+
+`--exact`, `__iexact` 완전히 똑같은거. i는 대소문자 구분 없이
+
+contains 는 SQL의 LIKE와 같다. 
+
+Room.objects.filter(price__lt=15).exists()
+
+True
+
+```python
+model
+def total_amenities(self):
+    return self.amenities.count()
+
+admin
+def total_amenities(self, room):
+    return room.amenities.count()
+```
 
 
 
