@@ -110,6 +110,16 @@ def total_amenities(self, room):
 
 
 
+## 7.5 Reverse Accessor
+
+dir을 사용하면 모든 메서드, 속성등 다 알 수 있다. 
+
+그리고 review_set, room_set등이 있다. 
+
+
+
+ForeignKey를 통해 만들면 사용 할 수 있다. (manytomany도 될건데???)
+
 
 
 
