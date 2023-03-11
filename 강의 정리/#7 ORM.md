@@ -48,3 +48,53 @@ name이 Apt로 시작하는 모두
 
 
 
+## 7.2 QuerySet
+
+QuerySet이란 연산자를 함께 묶어주는 일을 한다. 
+
+묶음 + QuerySet를 받게 되는데. 다시 필터링을 하려고 하면 QuerySet으로 묶여 있기 때문에 가능하다. 
+
+
+
+Room.objects.filter(pet_friendly=True).exclude(price__lt=15).filter(name\_\_contains='서울')
+
+Room.objects.filter(pet_friendly=True,name\_\_contains='서울').exclude(price__lt=15)
+
+Room.objects.filter(pet_friendly=True,name\_\_contains='서울').count()
+
+Room.objects.all()[:5]
+
+
+
+QuerySet은 게으르다. 무슨 말이냐면 실제로 데이터를 가져오도록 요청받았을 때만 데이터베이스와 소통할 것이다. 
+
+그러니까 내가 이름을 가져와 달라고 한 다음에 해당 데이터를 가져온다.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
