@@ -20,6 +20,11 @@ class RoomAdmin(admin.ModelAdmin):
         "kind",
         "amenities",
     )
+    search_fields = (
+        "owner__username"
+        # "name",
+        # "^price",  # ^ startwith, = 같을때,
+    )
 
     # def total_amenities(self, room):
     #     return room.amenities.count()
