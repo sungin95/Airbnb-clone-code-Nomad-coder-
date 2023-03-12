@@ -32,7 +32,7 @@ class RoomAdmin(admin.ModelAdmin):
         "amenities",
     )
     search_fields = (
-        "owner__username"
+        "owner__username",
         # "name",
         # "^price",  # ^ startwith, = 같을때,
     )
