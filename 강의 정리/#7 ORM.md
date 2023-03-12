@@ -122,6 +122,10 @@ ForeignKey를 통해 만들면 사용 할 수 있다. (manytomany도 될건데??
 
 
 
+## 7.6 related_name (_set 이름 바꾸어 주기)
+
+
+
 
 
 
