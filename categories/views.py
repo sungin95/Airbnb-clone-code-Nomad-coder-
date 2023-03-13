@@ -1,13 +1,13 @@
-from django.shortcuts import render
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from .models import Category
-from django.http import JsonResponse
 
 
+@api_view()
 def categories(request):
-    all_categories = Category.objects.all()
-    return JsonResponse(
+    return Response(
         {
             "ok": True,
-            "categories": all_categories,  # 동작 안한다. 이걸 serializable을 통해 바꾸어 보내주어야 한다.
+            "categories": Category.objects.all(),
         }
     )
