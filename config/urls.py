@@ -19,6 +19,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("rooms/", include("rooms.urls")),
-    path("categories/", include("categories.urls")),
+    path("api/v1/rooms/", include("rooms.urls")),
+    path(
+        "api/v1/categories/", include("categories.urls")
+    ),  # api/v1 사람들에게 api라는 것을 알리기 위해
 ]
