@@ -37,3 +37,10 @@ from django.core import serializers
 
 REST Framework 를 사용할 것이고, 이것을 위해 데코레이터를 활용해야 한다. 
 
+
+
+## 3
+
+serializer를 통해 JSON으로 번역을 해 주어야 한다. 
+
+그리고 serializer는 무엇을 번역할지, 어떻게 출력할 지를 결정할 수 있다. 
