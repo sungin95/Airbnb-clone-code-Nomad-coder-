@@ -20,3 +20,10 @@ class CategorrySerializer(serializers.Serializer):
         # )
         # ** 딕셔너리를 가져온다. 알아서 매칭해 준다.
         return Category.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        # 값 있으면 바꾸고 없으면 그대로
+        instance.name = validated_data.get("name", instance.name)
+        instance.kind = validated_data.get("kind", instance.kind)
+        instance.save()
+        return instance

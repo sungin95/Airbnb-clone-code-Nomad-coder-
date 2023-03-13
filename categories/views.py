@@ -1,4 +1,5 @@
 from rest_framework.decorators import api_view
+from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 from .models import Category
 from .serializes import CategorrySerializer
@@ -33,9 +34,30 @@ def categories(request):
 
 
 # GET /categories/1
-@api_view()
+@api_view(["GET", "PUT"])
 def category(request, pk):
-    category = Category.objects.get(pk=pk)
-    serializer = CategorrySerializer(category)
+    try:
+        category = Category.objects.get(pk=pk)
+    except Category.DoesNotExist:
+        raise NotFound
+    if request.method == "GET":
+        serializer = CategorrySerializer(category)
+        return Response(serializer.data)
+    elif request.method == "PUT":
+        serializer = CategorrySerializer(
+            category,
+            data=request.data,
+            partial=True,  # 부분 수정할 거란걸 말해줘야 한다.
+        )
+    if serializer.is_valid():
+        updated_category = (
+            serializer.save()
+        )  # category, data=request.data 두개를 주어서 update를 호출할 거란걸 안다.
+        return Response(CategorrySerializer(updated_category).data)
+    else:
+        return Response(serializer.errors)
 
-    return Response(serializer.data)
+
+{
+    "kind": "lalalala",
+}
