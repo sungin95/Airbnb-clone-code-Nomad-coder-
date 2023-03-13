@@ -15,15 +15,21 @@ def categories(request):
     elif request.method == "POST":
         serializer = CategorrySerializer(data=request.data)
         if serializer.is_valid():
-            return Response({"created": True})
+            new_category = serializer.save()  # 자동으로 create메서드를 찾는다
+
+            return Response(
+                CategorrySerializer(new_category).data,
+            )
         else:
             return Response(serializer.errors)
 
 
-# {
-# "name": "Category from DRF",
-# "kind": "rooms"
-# }
+"""
+{
+"name": "Category from DRF",
+"kind": "rooms"
+}
+"""
 
 
 # GET /categories/1

@@ -60,3 +60,30 @@ api_view()은 기본적으로 GET만 허용. POST도 허용 하고 싶다면 api
 
 
 serializer는 번역을 하는 역할도 하지만 데이터를 검증하는 역할도 한다. 
+
+
+
+## 5 is_valid()
+
+검증 조건은 serializer을 통해 할 수 있다. 
+
+read_only=True 를 통하여 데이터를 안 받아도 통과 가능
+
+
+
+## 6
+
+​    def create(self, validated_data):
+
+```python
+# Category.objects.create(
+# name=validated_data["name"],
+# kind=validated_data["kind"],
+# )
+
+# ** 딕셔너리를 가져온다. 알아서 매칭해 준다.
+return Category.objects.create(**validated_data)
+```
+
+
+
