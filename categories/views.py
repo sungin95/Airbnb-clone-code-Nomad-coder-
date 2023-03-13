@@ -3,14 +3,30 @@ from rest_framework.response import Response
 from .models import Category
 from .serializes import CategorrySerializer
 
+# GET /categories
 
-@api_view()
+
+@api_view(["GET", "POST"])
 def categories(request):
-    all_categories = Category.objects.all()
-    serializer = CategorrySerializer(all_categories, many=True)
-    return Response(
-        {
-            "ok": True,
-            "categories": serializer.data,
-        }
-    )
+    if request.method == "GET":
+        all_categories = Category.objects.all()
+        serializer = CategorrySerializer(all_categories, many=True)
+        return Response(serializer.data)
+    elif request.method == "POST":
+        print(request.data)
+        return Response({"created": True})
+
+
+# {
+# "name": "Category from DRF",
+# "kind": "rooms"
+# }
+
+
+# GET /categories/1
+@api_view()
+def category(request, pk):
+    category = Category.objects.get(pk=pk)
+    serializer = CategorrySerializer(category)
+
+    return Response(serializer.data)
