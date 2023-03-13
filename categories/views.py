@@ -13,8 +13,11 @@ def categories(request):
         serializer = CategorrySerializer(all_categories, many=True)
         return Response(serializer.data)
     elif request.method == "POST":
-        print(request.data)
-        return Response({"created": True})
+        serializer = CategorrySerializer(data=request.data)
+        if serializer.is_valid():
+            return Response({"created": True})
+        else:
+            return Response(serializer.errors)
 
 
 # {
