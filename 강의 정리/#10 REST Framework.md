@@ -115,3 +115,54 @@ id = IntegerField(label='ID', read_only=True)
     kind = ChoiceField(choices=[('rooms', 'Rooms'), ('experiences', 'Experiences')])
 
 위는 프린트를 한 값인데. 보면 created_at, updated_at은 read_only=True로 자동 세팅 한 것을 볼 수 있다. 
+
+
+
+## ViewSet
+
+views
+
+```python
+class CategoryViewSet(ModelViewSet):
+    # 두가지를 알아야 한다. serializer와 object
+
+    serializer_class = CategorrySerializer
+    queryset = Category.objects.all()
+```
+
+urls
+
+```python
+from django.urls import path
+from . import views
+
+
+urlpatterns = [
+    path(
+        "",
+        views.CategoryViewSet.as_view(
+            {
+                "get": "list",
+                "post": "create",
+            }
+        ),
+    ),
+    path(
+        "<int:pk>",  # pk이름을 바꾸면 다시 설정해 줘야 한다.
+        views.CategoryViewSet.as_view(
+            {
+                "get": "retrieve",
+                "put": "partial_update",
+                "delete": "destroy",
+            }
+        ),
+    ),
+]
+```
+
+끝
+
+플러스 HTTP Form도 제공해 준다. 
+
+
+
