@@ -2,19 +2,18 @@ from rest_framework.decorators import api_view
 from rest_framework.exceptions import NotFound
 from rest_framework.response import Response
 from rest_framework.status import HTTP_204_NO_CONTENT
+from rest_framework.views import APIView
 from .models import Category
 from .serializes import CategorrySerializer
 
-# GET /categories
 
-
-@api_view(["GET", "POST"])
-def categories(request):
-    if request.method == "GET":
+class Categories(APIView):
+    def get(self, request):
         all_categories = Category.objects.all()
         serializer = CategorrySerializer(all_categories, many=True)
         return Response(serializer.data)
-    elif request.method == "POST":
+
+    def post(self, request):
         serializer = CategorrySerializer(data=request.data)
         if serializer.is_valid():
             new_category = serializer.save()  # 자동으로 create메서드를 찾는다
@@ -26,28 +25,24 @@ def categories(request):
             return Response(serializer.errors)
 
 
-"""
-{
-"name": "Category from DRF",
-"kind": "rooms"
-}
-"""
+class CategoryDetaiil(APIView):
+    # 이건 관습이다.
+    # 디테일한 부분을 가져 올떄는 이 방식으로 한다.
+    # category를 사용 할거면 아래를 이용한다.
+    # self.get_object(pk)
+    def get_object(self, pk):
+        try:
+            return Category.objects.get(pk=pk)
+        except Category.DoesNotExist:
+            raise NotFound
 
-
-# GET /categories/1
-@api_view(["GET", "PUT", "DELETE"])
-def category(request, pk):
-    try:
-        category = Category.objects.get(pk=pk)
-    except Category.DoesNotExist:
-        raise NotFound
-
-    if request.method == "GET":
-        serializer = CategorrySerializer(category)
+    def get(self, request, pk):
+        serializer = CategorrySerializer(self.get_object(pk))
         return Response(serializer.data)
-    elif request.method == "PUT":
+
+    def put(self, request, pk):
         serializer = CategorrySerializer(
-            category,
+            self.get_object(pk),
             data=request.data,
             partial=True,  # 부분 수정할 거란걸 말해줘야 한다.
         )
@@ -58,11 +53,7 @@ def category(request, pk):
             return Response(CategorrySerializer(updated_category).data)
         else:
             return Response(serializer.errors)
-    elif request.method == "DELETE":
-        category.delete()
+
+    def delete(self, request, pk):
+        self.get_object(pk).delete()
         return Response(status=HTTP_204_NO_CONTENT)
-
-
-{
-    "kind": "lalalala",
-}

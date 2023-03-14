@@ -87,3 +87,11 @@ return Category.objects.create(**validated_data)
 
 
 
+## 7 update
+
+data = {'name':'nico'}
+
+data.get('fav_food','pizza')
+
+찾았는데 없으면 오른쪽 값을 호출한다. 
+
