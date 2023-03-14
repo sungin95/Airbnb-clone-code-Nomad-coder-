@@ -7,7 +7,10 @@ class CategorrySerializer(serializers.ModelSerializer):  # Serializer->ModelSeri
     class Meta:
         model = Category
         # 선택 혹은 제외
-        fields = "__all__"
+        fields = (
+            "name",
+            "kind",
+        )
         # fields = (
         #     "name",
         #     "kind",
