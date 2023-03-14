@@ -38,6 +38,7 @@ class CategoryDetaiil(APIView):
 
     def get(self, request, pk):
         serializer = CategorrySerializer(self.get_object(pk))
+        # print(serializer)
         return Response(serializer.data)
 
     def put(self, request, pk):

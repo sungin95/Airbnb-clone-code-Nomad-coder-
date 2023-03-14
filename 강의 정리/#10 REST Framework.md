@@ -95,3 +95,23 @@ data.get('fav_food','pizza')
 
 찾았는데 없으면 오른쪽 값을 호출한다. 
 
+
+
+## 11 serializers.ModelSerializer
+
+```python
+class CategorrySerializer(serializers.ModelSerializer):
+	class Meta:
+        model = Category
+        # 선택 혹은 제외
+        # fields = ("__all__")
+        exclude = ("created_at",)
+```
+
+id = IntegerField(label='ID', read_only=True)
+    created_at = DateTimeField(read_only=True)
+    updated_at = DateTimeField(read_only=True)
+    name = CharField(max_length=50)
+    kind = ChoiceField(choices=[('rooms', 'Rooms'), ('experiences', 'Experiences')])
+
+위는 프린트를 한 값인데. 보면 created_at, updated_at은 read_only=True로 자동 세팅 한 것을 볼 수 있다. 
