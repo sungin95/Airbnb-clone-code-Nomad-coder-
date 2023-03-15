@@ -4,6 +4,7 @@ from .models import Amenity, Room
 from users.serializers import TinyUserSerializer
 from reviews.serializers import ReviewSerializer
 from categories.serializes import CategorrySerializer
+from medias.serializers import PhotoSerializer
 
 
 class AmenitySerializer(ModelSerializer):
@@ -30,6 +31,11 @@ class RoomDetailSerializer(ModelSerializer):
     )
     rating = serializers.SerializerMethodField()
     is_owner = serializers.SerializerMethodField()
+    photos = PhotoSerializer(
+        many=True,
+        read_only=True,
+    )
+
     # 아 이게 room.reviews 라는 뜻을 가지고 있구나.
     # reviews = ReviewSerializer(
     #     many=True,
@@ -51,6 +57,10 @@ class RoomDetailSerializer(ModelSerializer):
 class RoomListSerializer(ModelSerializer):
     rating = serializers.SerializerMethodField()
     is_owner = serializers.SerializerMethodField()
+    photos = PhotoSerializer(
+        many=True,
+        read_only=True,
+    )
 
     class Meta:
         model = Room
@@ -62,6 +72,7 @@ class RoomListSerializer(ModelSerializer):
             "price",
             "rating",
             "is_owner",
+            "photos",
         )
         # depth = 1  # 관계가 있는 id의 정보도 보인다.
 
