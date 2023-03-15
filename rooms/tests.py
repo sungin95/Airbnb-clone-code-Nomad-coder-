@@ -12,6 +12,6 @@ from django.test import TestCase
     "address": "123",
     "pet_friendly": true,
     "category": 3,
-    "amenities": [1, 2, 3],
+    "amenities": [3, 4],
     "kind": "private_room",
 }

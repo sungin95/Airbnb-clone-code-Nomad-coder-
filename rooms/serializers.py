@@ -21,20 +21,20 @@ class RoomDetailSerializer(ModelSerializer):
     owner = TinyUserSerializer(
         read_only=True,
     )
-    amenities = AmenitySerializer(
-        read_only=True,
-        many=True,
-    )
+    # amenities = AmenitySerializer(
+    #     read_only=True,
+    #     many=True,
+    # )
     category = CategorrySerializer(
         read_only=True,
     )
     rating = serializers.SerializerMethodField()
     is_owner = serializers.SerializerMethodField()
     # 아 이게 room.reviews 라는 뜻을 가지고 있구나.
-    reviews = ReviewSerializer(
-        many=True,
-        read_only=True,
-    )
+    # reviews = ReviewSerializer(
+    #     many=True,
+    #     read_only=True,
+    # )
 
     class Meta:
         model = Room
