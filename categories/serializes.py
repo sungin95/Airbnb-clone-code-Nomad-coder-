@@ -8,6 +8,7 @@ class CategorrySerializer(serializers.ModelSerializer):  # Serializer->ModelSeri
         model = Category
         # 선택 혹은 제외
         fields = (
+            "pk",
             "name",
             "kind",
         )

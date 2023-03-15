@@ -1,6 +1,11 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.exceptions import NotFound, NotAuthenticated, ParseError
+from rest_framework.exceptions import (
+    NotFound,
+    NotAuthenticated,
+    ParseError,
+    PermissionDenied,
+)
 from rest_framework.status import HTTP_204_NO_CONTENT
 from django.db import transaction
 from categories.models import Category
@@ -68,7 +73,6 @@ class Rooms(APIView):
         if request.user.is_authenticated:
             serializer = RoomDetailSerializer(data=request.data)
             if serializer.is_valid():
-                print(request.data)
                 # category
                 category_pk = request.data.get("category")
                 if not category_pk:
@@ -115,3 +119,59 @@ class RoomDetail(APIView):
         room = self.get_object(pk)
         serializer = RoomDetailSerializer(room)
         return Response(serializer.data)
+
+    def put(self, request, pk):
+        room = self.get_object(pk)
+        # 검증
+        if not request.user.is_authenticated:
+            raise NotAuthenticated
+        if room.owner != request.user:
+            raise PermissionDenied
+
+        serializer = RoomDetailSerializer(room, data=request.data, partial=True)
+        if serializer.is_valid():
+            # category
+            category_pk = request.data.get("category", room.category.pk)
+            if not category_pk:
+                raise ParseError("Category is require.")
+            try:
+                category = Category.objects.get(pk=category_pk)
+                # room만 선택해야 하니까
+                if category.kind == Category.CategoryKindChoices.EXPERIENCES:
+                    raise ParseError("The category kind should be 'rooms'")
+            except Category.DoesNotExist:
+                raise ParseError("Category not found")
+            #
+            # 트랜잭션이 작동안하면 유저에게 알려주기 위해 try
+            try:
+                # 트랜잭션!!! 변경사항을 기억하고 있다가 문제없이 끝나면 푸쉬
+                # try,except를 사용하면 에러난 사실을 감지 못하니까 사용X
+                with transaction.atomic():
+                    room = serializer.save(
+                        owner=request.user,
+                        category=category,
+                    )
+                    # amenities
+                    amenities = request.data.get("amenities")
+                    # none이면 pass, != 이면 clear 개로운 값 추가
+                    if amenities != None:
+                        room.amenities.clear()
+                        for amenity_pk in amenities:
+                            amenity = Amenity.objects.get(pk=amenity_pk)
+                            room.amenities.add(amenity)
+                    serializer = RoomDetailSerializer(room)
+                    return Response(serializer.data)
+
+            except Exception:
+                raise ParseError("Amenity not found")
+        else:
+            return Response(serializer.errors)
+
+    def delete(self, request, pk):
+        room = self.get_object(pk)
+        if not request.user.is_authenticated:
+            raise NotAuthenticated
+        if room.owner != request.user:
+            raise PermissionDenied
+        room.delete()
+        return Response(status=HTTP_204_NO_CONTENT)
