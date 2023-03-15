@@ -3,7 +3,8 @@ from common.models import CommonModel
 
 
 class Photo(CommonModel):
-    file = models.ImageField()
+    # URLField? 처음 보네
+    file = models.URLField()
     description = models.CharField(
         max_length=140,
     )
@@ -27,7 +28,7 @@ class Photo(CommonModel):
 
 
 class Video(CommonModel):
-    file = models.FileField()
+    file = models.URLField()
     # ForeignKey와 비슷하지만 유니크한 속성을 가진다.
     experience = models.OneToOneField(
         "experiences.Experience",
