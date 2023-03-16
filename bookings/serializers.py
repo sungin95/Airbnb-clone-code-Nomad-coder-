@@ -34,7 +34,7 @@ class CreateRoomBookingSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("체크인 날짜가 체크아웃 날짜보다 먼저 와야 합니다.")
         if Booking.objects.filter(
             check_in__lte=data["check_out"],
-            check_out_gte=data["check_in"],
+            check_out__gte=data["check_in"],
         ).exists():
             raise serializers.ValidationError("이미 예약이 돼있습니다. ")
 
