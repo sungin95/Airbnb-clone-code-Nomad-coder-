@@ -23,7 +23,7 @@ class User(AbstractUser):
         max_length=150,
         editable=False,
     )
-    avatar = models.ImageField(blank=True)  # poetry add Pillow
+    avatar = models.URLField(blank=True)  # poetry add Pillow
     name = models.CharField(
         max_length=150,
         default="",
