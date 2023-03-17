@@ -1,5 +1,7 @@
 # authenticate: username과 password가 맞으면 user리턴
 # login 은 토큰등 필요한것을 자동으로 생성해줌.
+import jwt
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -134,3 +136,26 @@ class ChangePassword(APIView):
         else:
             raise ParseError
             # return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class JWTLogIn(APIView):
+    def post(self, request):
+        username = request.data.get("username")
+        password = request.data.get("password")
+        if not username or not password:
+            raise ParseError
+        user = authenticate(
+            request,
+            username=username,
+            password=password,
+        )
+        if user:
+            # secret_key가 중요하다.
+            token = jwt.encode(
+                {"pk": user.pk},
+                settings.SECRET_KEY,
+                algorithm="HS256",
+            )
+            return Response({"token": token})
+        else:
+            return Response({"error": "wrong password"})
