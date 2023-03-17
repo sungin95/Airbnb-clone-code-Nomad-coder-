@@ -157,5 +157,6 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",  # 기본 값
         "config.authentication.TrustMeBroAuthentication",
         "rest_framework.authentication.TokenAuthentication",
+        "config.authentication.JWTAuthentication",
     ]
 }
