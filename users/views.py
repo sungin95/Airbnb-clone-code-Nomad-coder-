@@ -1,3 +1,6 @@
+# authenticate: username과 password가 맞으면 user리턴
+# login 은 토큰등 필요한것을 자동으로 생성해줌.
+from django.contrib.auth import authenticate, login, logout
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -86,6 +89,33 @@ class UserReviews(APIView):
             many=True,
         )
         return Response(serializer.data)
+
+
+class LogIn(APIView):
+    def post(self, request):
+        username = request.data.get("username")
+        password = request.data.get("password")
+        if not username or not password:
+            raise ParseError
+        user = authenticate(
+            request,
+            username=username,
+            password=password,
+        )
+        if user:
+            # login시키고 백엔드에 세션 생성, 사용자에게 cookie제공
+            login(request, user)
+            return Response({"ok": "Welcome!"})
+        else:
+            return Response({"error": "wrong password"})
+
+
+class LogOut(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        logout(request)
+        return Response({"ok": "bye!"})
 
 
 class ChangePassword(APIView):
