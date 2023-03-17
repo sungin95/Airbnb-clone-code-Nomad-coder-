@@ -3,8 +3,12 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ParseError, NotFound
-from .serializers import PrivateUserSerializer
+from .serializers import PrivateUserSerializer, PublicUserSerializer
 from .models import User
+from rooms.models import Room
+from rooms.serializers import RoomListSerializer
+from reviews.models import Review
+from reviews.serializers import ReviewSerializer
 
 
 class Me(APIView):
@@ -56,11 +60,32 @@ class PublicUser(APIView):
             user = User.objects.get(username=username)
         except User.DoesNotExist:
             raise NotFound
-        serializer = PrivateUserSerializer(user)
+        serializer = PublicUserSerializer(user)
         return Response(serializer.data)
 
     # 코드 챌린지
     # user에 대한 리뷰
+
+
+class UserRooms(APIView):
+    def get(self, request, username):
+        all_rooms = Room.objects.filter(owner__username=username)
+        serializer = RoomListSerializer(
+            all_rooms,
+            many=True,
+            context={"request": request},
+        )
+        return Response(serializer.data)
+
+
+class UserReviews(APIView):
+    def get(self, request, username):
+        all_reviews = Review.objects.filter(user__username=username)
+        serializer = ReviewSerializer(
+            all_reviews,
+            many=True,
+        )
+        return Response(serializer.data)
 
 
 class ChangePassword(APIView):
