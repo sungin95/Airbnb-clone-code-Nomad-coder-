@@ -1,17 +1,8 @@
-from django.test import TestCase
+from rest_framework.test import APITestCase
 
-# Create your tests here.
-{
-    "name": "We are done",
-    "country": "한국",
-    "city": "서울",
-    "price": 20,
-    "rooms": 1,
-    "toilets": 1,
-    "description": "Room with owner and amenities and categories!",
-    "address": "123",
-    "pet_friendly": true,
-    "category": 3,
-    "amenities": [3, 4],
-    "kind": "private_room",
-}
+
+class TestAmenities(APITestCase):
+    def test_two_plus_two(self):
+        self.assertEqual(2 + 2, 5, "The math is wrong.")
+        # client는 API client를 말하는건데, API 서버로 request를 보낼 수 있게 해 준다.
+        # self.client.login()
