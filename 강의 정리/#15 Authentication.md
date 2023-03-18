@@ -63,3 +63,37 @@ path("token-login", obtain_auth_token),
 
 ## 4 JWT
 
+JSON Web Token은 데이터베이스에 공간을 전혀 차지하지 않는다. 
+
+Auth Token은 공간을 차지한다. 
+
+
+
+JWT는 암호화된 정보를 담고 있는 토큰을 유저에게 주고 (유저의 정보가 들어 있다. )
+
+유저는 그 토큰을 가지고 있다가 다시 준다. 
+
+토큰을 확인한다.
+
+ 
+
+문제점. 유저를 강제로 로그아웃을 시킬 수가 없다. 
+
+
+
+pyJWT라는 라이브러리 사용
+
+
+
+JWT토큰은 우리가 준 토큰인지, 수정되었는지 아닌지를 알 수 있다. 
+
+
+
+
+
+## 6 .env
+
+django-environ을 들어간다. 
+
+ `python -m pip install django-environ`
+

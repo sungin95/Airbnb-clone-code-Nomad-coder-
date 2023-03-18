@@ -48,6 +48,19 @@ class Experience(CommonModel):
     def __str__(self) -> str:
         return self.name
 
+    def total_perks(self):
+        return self.perks.count()
+
+    def rating(experience):
+        count = experience.reviews.count()
+        if count == 0:
+            return 0
+        else:
+            total_rating = 0
+            for review in experience.reviews.all().values("rating"):
+                total_rating += review["rating"]
+            return round(total_rating / count, 2)
+
 
 class Perk(CommonModel):
 
