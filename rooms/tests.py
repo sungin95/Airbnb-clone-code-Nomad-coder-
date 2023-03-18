@@ -109,50 +109,50 @@ class TestAmenity(APITestCase):
             self.DESC,
         )
 
-    # # code challenge
-    # def test_put_amenity(self):
-    #     URL = "/api/v1/rooms/amenities/1/"
-    #     put_amenity_name = "Put Amenity"
-    #     put_amenity_description = "Put Amenity desc."
+    # code challenge
+    def test_put_amenity(self):
+        URL = "/api/v1/rooms/amenities/1/"
+        put_amenity_name = "Put Amenity"
+        put_amenity_description = "Put Amenity desc."
 
-    #     response = self.client.put(
-    #         URL,
-    #         amenity=Amenity.objects.get(pk=1),
-    #         data={
-    #             "name": put_amenity_name,
-    #             "description": put_amenity_description,
-    #         },
-    #         partial=True,
-    #     )
-    #     self.assertEqual(response.status_code, 200)
-    #     data = response.json()
+        response = self.client.put(
+            URL,
+            amenity=Amenity.objects.get(pk=1),
+            data={
+                "name": put_amenity_name,
+                "description": put_amenity_description,
+            },
+            partial=True,
+        )
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
 
-    #     self.assertEqual(
-    #         data["name"],
-    #         put_amenity_name,
-    #     )
+        self.assertEqual(
+            data["name"],
+            put_amenity_name,
+        )
 
-    #     self.assertEqual(
-    #         data["description"],
-    #         put_amenity_description,
-    #     )
+        self.assertEqual(
+            data["description"],
+            put_amenity_description,
+        )
 
-    # # code challenge
-    # def test_not_put_amenity(self):
-    #     URL = "/api/v1/rooms/amenities/1/"
-    #     put_amenity_name = "Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity "
-    #     put_amenity_description = "Put Amenity desc."
+    # code challenge
+    def test_not_put_amenity(self):
+        URL = "/api/v1/rooms/amenities/1/"
+        put_amenity_name = "Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity Put Amenity "
+        put_amenity_description = "Put Amenity desc."
 
-    #     response = self.client.put(
-    #         URL,
-    #         amenity=Amenity.objects.get(pk=1),
-    #         data={
-    #             "name": put_amenity_name,
-    #             "description": put_amenity_description,
-    #         },
-    #         partial=True,
-    #     )
-    #     self.assertEqual(response.status_code, 400)
+        response = self.client.put(
+            URL,
+            amenity=Amenity.objects.get(pk=1),
+            data={
+                "name": put_amenity_name,
+                "description": put_amenity_description,
+            },
+            partial=True,
+        )
+        self.assertEqual(response.status_code, 400)
 
     def test_delete_amenity(self):
         response = self.client.delete("/api/v1/rooms/amenities/1/")
