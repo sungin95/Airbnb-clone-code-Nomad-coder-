@@ -12,7 +12,7 @@ rooms
     "address": "123",
     "pet_friendly": true,
     "category": 3,
-    "amenities": [3, 4],
+    "amenities": [4],
     "kind": "private_room"
 }
 ```

@@ -112,10 +112,10 @@ class Experiences(APIView):
                     for perk_pk in perks:
                         perk = Perk.objects.get(pk=perk_pk)
                         experience.perks.add(perk)
-                    serializer = ExperienceDetailSerializer(experience)
-                    # 문제가 없는데 왜 있는거야!!!
-                    print(serializer.data)
-                    return Response()  # serializer.data
+                    serializer = ExperienceDetailSerializer(
+                        experience, context={"request": request}
+                    )
+                    return Response(serializer.data)
             except Exception:
                 print(serializer)
                 raise ParseError("perk not found")
