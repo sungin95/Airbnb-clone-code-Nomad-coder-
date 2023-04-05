@@ -36,3 +36,10 @@ axios는 fetch의 상위 호환이다.
 
 
 
+# 5
+
+`npm i @tanstack/react-query-devtools`
+
+
+
+변수를 Query 함수로 보내는 방법
