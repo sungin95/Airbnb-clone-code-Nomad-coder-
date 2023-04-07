@@ -1,6 +1,7 @@
 # authenticate: username과 password가 맞으면 user리턴
 # login 은 토큰등 필요한것을 자동으로 생성해줌.
 import jwt
+import requests
 from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from rest_framework.response import Response
@@ -164,5 +165,17 @@ class JWTLogIn(APIView):
 class GithubLogin(APIView):
     def post(self, request):
         code = request.data.get("code")
-        print(code)
-        return Response()
+        print(settings.GH_SECRET)
+        access_token = requests.post(
+            f"https://github.com/login/oauth/access_token?code={code}&client_id=c6102a1014c5e26e2c21&client_secret={settings.GH_SECRET}",
+            headers={"Accept": "application/json"},
+        )
+        access_token = access_token.json().get("access_token")
+        user_data = requests.get(
+            "https://api.github.com/user",
+            headers={
+                "Authorization": f"Bearer {access_token}",
+                "Accept": "application/json",
+            },
+        )
+        user_data = user_data.json()
