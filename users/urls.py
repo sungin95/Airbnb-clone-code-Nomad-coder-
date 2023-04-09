@@ -16,6 +16,7 @@ urlpatterns = [
     path("jwt-login", views.JWTLogIn.as_view()),
     # 소설로그인
     path("github", views.GithubLogin.as_view()),
+    path("kakao", views.KakaoLogIn.as_view()),
     # @는 인스타에서도 사용하니까 그냥 붙이는거.
     path("@<str:username>", views.PublicUser.as_view()),
     path("@<str:username>/rooms", views.UserRooms.as_view()),
