@@ -55,9 +55,10 @@ class Users(APIView):
             user.set_password(password)
             user.save()
             serializer = PrivateUserSerializer(user)
+            login(request, user)
             return Response(serializer.data)
         else:
-            return Response(serializer.errors)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class PublicUser(APIView):
