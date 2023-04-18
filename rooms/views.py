@@ -115,7 +115,6 @@ class Rooms(APIView):
                     amenities = request.data.get("amenities")
                     for amenity_pk in amenities:
                         amenity = Amenity.objects.get(pk=amenity_pk)
-                        print(amenity, amenity_pk)
                         room.amenities.add(amenity)
                     serializer = RoomDetailSerializer(
                         room, context={"request": request}

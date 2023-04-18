@@ -12,7 +12,7 @@ class CategoryViewSet(ModelViewSet):
     # 두가지를 알아야 한다. serializer와 object
 
     serializer_class = CategorrySerializer
-    queryset = Category.objects.all()
+    queryset = Category.objects.filter(kind=Category.CategoryKindChoices.ROOMS)
 
 
 # class Categories(APIView):
