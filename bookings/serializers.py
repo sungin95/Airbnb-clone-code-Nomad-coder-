@@ -30,9 +30,11 @@ class CreateRoomBookingSerializer(serializers.ModelSerializer):
 
     # 얘는 모든 데이터를 받는다. 에러 상황에서는 필드 없이 에러값을 띄운다.
     def validate(self, data):
+        room = self.context.get("room")
         if data["check_out"] <= data["check_in"]:
             raise serializers.ValidationError("체크인 날짜가 체크아웃 날짜보다 먼저 와야 합니다.")
         if Booking.objects.filter(
+            room=room,
             check_in__lte=data["check_out"],
             check_out__gte=data["check_in"],
         ).exists():
